@@ -3,33 +3,42 @@ const app = express();
 const port = process.env.PORT || 5001;
 const todos = [];
 
-app.use(express.json()); // to convert body into json (body = ppost man body jis ma sare encrypted data hota ha)
+app.use(express.json()); // to convert body into json (body = post man body jis ma sare encrypted data hota ha)
 
 // yah api sa todo ko lena ka lia ha
 app.get("/all-todos", (request, response) => {
-  response.send(todos);
+  const message = !todos.length ? "todos empty" : "todo is here";
+  response.send({ data: todos, message: message });
 });
 
 // for post on new todo on browser
 app.post("/add-todo", (request, response) => {
-  todos.push({ todoContent: request.body.todo, id: new Date().getTime() });
-  response.send("first todo");
+  const addTodoObj =  { todoContent: request.body.todo, id: new Date().getTime() };
+  todos.push(addTodoObj);
+  response.send({message: "todo added ho gya ha", data : addTodoObj} );
 });
 
 // for edit only single todo
-app.patch("/edit-todo/:id", (request, response) => {
+app.patch("/edit-todo/:id"), (request, response) => {
   const id = parseInt(request.params.id);
+  let isFound = false;
   for (let index = 0; index < todos.length; index++) {
     if (todos[index].id === id) {
       // Compare with converted number
       todos[index].todoContent = request.body.todoContent;
+      isFound = true;
       break;
-
     }
   }
-  response.status(201).send("Todo Updated Sucussfully!");
-});
-
+  if (isFound) {
+    response.status(201).send({
+      message: "Todo Updated Successfully!",
+      data: { todoContent: request.body.todoContent, id: id }
+    });
+  } else {
+    response.status(200).send({data : null, message : "todo not found "});
+  }
+}
 //for delete only single todo
 app.delete("/delete-solo-todo/:id", (request, response) => {});
 
