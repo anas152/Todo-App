@@ -44,28 +44,30 @@ app.patch("/edit-todo/:id", (request, response) => {
 });
 //for delete only single todo
 app.delete("/delete-solo-todo/:id", (request, response) => {
-  const {id} = request.params;
+  const id = parseInt(request.params.id); // Ensure ID is parsed as an integer
 
   let isFound = false;
   for (let i = 0; i < todos.length; i++) {
-    if (todos[i].id === id) {
-      todos.splice(i, 1);
+    if (todos[i].id === id) { // Compare numeric IDs
+      todos.splice(i, 1); // Delete the todo
       isFound = true;
       break;
     }
-    
   }
 
   if (isFound) {
     response.status(201).send({
-      message: "Todo deleted successfully!",
+      message: "todo deleted successfully!",
     });
   } else {
-    response.status(404).send({ data: null, message: "Todo not found" });
+    response.status(200).send({
+     data: null, message: "todo not found"
+    });
   }
 });
 
-//
+
+// route not found 
 app.use((request, response) => {
   response.status(404).send("No Route Found 404");
 });
