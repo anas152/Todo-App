@@ -4,6 +4,10 @@ const port = process.env.PORT || 5001;
 const todos = [];
 
 app.use(express.json()); // to convert body into json (body = post man body jis ma sare encrypted data hota ha)
+app.use(
+  cors({ origin: ["http://localhost:5173", "https://anas-todo.surge.sh"] }),
+);
+
 
 // yah api sa todo ko lena ka lia ha
 app.get("/all-todos", (request, response) => {
