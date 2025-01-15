@@ -1,7 +1,9 @@
 import express, { request, response } from "express";
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 5001;
 const todos = [];
+
 
 app.use(express.json()); // to convert body into json (body = post man body jis ma sare encrypted data hota ha)
 app.use(
