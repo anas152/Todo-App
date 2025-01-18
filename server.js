@@ -10,9 +10,6 @@ app.use(
   cors({ origin: ["http://localhost:5173", "https://anas-todoapp-express.surge.sh"] }),
 );
 
-
-
-
 // yah api sa todo ko lena ka lia ha
 app.get("/all-todos", (request, response) => {
   const message = !todos.length ? "todos empty" : "todo is here";
@@ -56,7 +53,7 @@ app.delete("/delete-solo-todo/:id", (request, response) => {
 
   let isFound = false;
   for (let i = 0; i < todos.length; i++) {
-    if (todos[i].id === id) { // Compare numeric IDs
+    if (todos[i].id === id) { 
       todos.splice(i, 1); // Delete the todo
       isFound = true;
       break;

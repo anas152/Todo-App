@@ -123,13 +123,15 @@ export default function App() {
                     </button>
                   </form>
                 )}
+                <form action="submit">
+
                 <div className="space-x-3">
                   {!todo.isEditing ? (
                     <button
-                      onClick={() => {
-                        const newTodos = todos.map((todo, i) => {
-                          if (i === index) {
-                            todo.isEditing = true;
+                    onClick={() => {
+                      const newTodos = todos.map((todo, i) => {
+                        if (i === index) {
+                          todo.isEditing = true;
                           } else {
                             todo.isEditing = false;
                           }
@@ -138,20 +140,21 @@ export default function App() {
                         setTodos([...newTodos]);
                       }}
                       className="text-indigo-600 hover:text-indigo-700 focus:outline-none"
-                    >
+                      >
                       Edit
                     </button>
                   ) : null}
                   {/* yah logic deltlet karni ki ha */}
                   {!todo.isEditing ? (
                     <button
-                      onClick={() => deleteTodo(todo.id)}
-                      className="text-red-600 hover:text-red-700 focus:outline-none"
+                    onClick={() => deleteTodo(todo.id)}
+                    className="text-red-600 hover:text-red-700 focus:outline-none"
                     >
                       Delete
                     </button>
                   ) : null}
                 </div>
+                      </form>
               </li>
             ))}
           </ul>
