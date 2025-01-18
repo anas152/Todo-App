@@ -7,8 +7,10 @@ const todos = [];
 
 app.use(express.json()); // to convert body into json (body = post man body jis ma sare encrypted data hota ha)
 app.use(
-  cors({ origin: ["http://localhost:5173", "https://anas-todo.surge.sh"] }),
+  cors({ origin: ["http://localhost:5173", "https://anas-todoapp-express.surge.sh"] }),
 );
+
+
 
 
 // yah api sa todo ko lena ka lia ha
@@ -17,7 +19,7 @@ app.get("/all-todos", (request, response) => {
   response.send({ data: todos, message: "yah han sab todos" });
 });
 
-// for post on new todo on browser
+// // for post on new todo on browser
 app.post("/add-todo", (request, response) => {
   const addTodoObj = {
     todoContent: request.body.todo,
@@ -27,7 +29,7 @@ app.post("/add-todo", (request, response) => {
   response.send({ message: "todo added ho gya ha", data: addTodoObj });
 });
 
-// for edit only single todo
+// // for edit only single todo
 app.patch("/edit-todo/:id", (request, response) => {
   const id = parseInt(request.params.id);
   let isFound = false;
@@ -48,7 +50,7 @@ app.patch("/edit-todo/:id", (request, response) => {
     response.status(200).send({ data: null, message: "todo not found " });
   }
 });
-//for delete only single todo
+// //for delete only single todo
 app.delete("/delete-solo-todo/:id", (request, response) => {
   const id = parseInt(request.params.id); // Ensure ID is parsed as an integer
 
