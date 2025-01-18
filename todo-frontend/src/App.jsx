@@ -123,7 +123,7 @@ export default function App() {
                     </button>
                   </form>
                 )}
-                <form action="submit">
+                <form >
 
                 <div className="space-x-3">
                   {!todo.isEditing ? (
