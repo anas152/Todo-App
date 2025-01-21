@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function App() {
-  const BASE_URL = "https://todo-app-ten-pi-87.vercel.app" ;
+  const BASE_URL = "https://todo-app-ten-pi-87.vercel.app";
 
   const [todos, setTodos] = useState([]);
 
@@ -54,19 +54,20 @@ export default function App() {
   };
 
   const deleteTodo = async (todoId) => {
-    // console.log(todoId); checking error solve ho gya ha
-
     try {
+      // update the UI
+      setTodos(todos.filter((todo) => todo.id !== todoId));
+      // Call the backend to delete the todo
       await axios.delete(`${BASE_URL}/delete-solo-todo/${todoId}`);
-      getTodo();
+        getTodo();
     } catch (err) {
       console.error(err?.response?.data?.message || "Deleting error");
+      getTodo();
     }
   };
-
+  
   return (
-
-    // todo add ka lia ha 
+    // todo add ka lia ha
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold mb-4">Todo App</h1>
@@ -104,7 +105,7 @@ export default function App() {
                     <button
                       className=" text-red-500 px-4 py-2 rounded-lg"
                       onClick={() => {
-                        const newTodos = todos.map((todo, i) => {                          
+                        const newTodos = todos.map((todo, i) => {
                           todo.isEditing = false;
                           return todo;
                         });
@@ -123,38 +124,37 @@ export default function App() {
                     </button>
                   </form>
                 )}
-                <form >
-
-                <div className="space-x-3">
-                  {!todo.isEditing ? (
-                    <button
-                    onClick={() => {
-                      const newTodos = todos.map((todo, i) => {
-                        if (i === index) {
-                          todo.isEditing = true;
-                          } else {
-                            todo.isEditing = false;
-                          }
-                          return todo;
-                        });
-                        setTodos([...newTodos]);
-                      }}
-                      className="text-indigo-600 hover:text-indigo-700 focus:outline-none"
+                <form>
+                  <div className="space-x-3">
+                    {!todo.isEditing ? (
+                      <button
+                        onClick={() => {
+                          const newTodos = todos.map((todo, i) => {
+                            if (i === index) {
+                              todo.isEditing = true;
+                            } else {
+                              todo.isEditing = false;
+                            }
+                            return todo;
+                          });
+                          setTodos([...newTodos]);
+                        }}
+                        className="text-indigo-600 hover:text-indigo-700 focus:outline-none"
                       >
-                      Edit
-                    </button>
-                  ) : null}
-                  {/* yah logic deltlet karni ki ha */}
-                  {!todo.isEditing ? (
-                    <button
-                    onClick={() => deleteTodo(todo.id)}
-                    className="text-red-600 hover:text-red-700 focus:outline-none"
-                    >
-                      Delete
-                    </button>
-                  ) : null}
-                </div>
-                      </form>
+                        Edit
+                      </button>
+                    ) : null}
+                    {/* yah logic deltlet karni ki ha */}
+                    {!todo.isEditing ? (
+                      <button
+                        onClick={() => deleteTodo(todo.id)}
+                        className="text-red-600 hover:text-red-700 focus:outline-none"
+                      >
+                        Delete
+                      </button>
+                    ) : null}
+                  </div>
+                </form>
               </li>
             ))}
           </ul>
